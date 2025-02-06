@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Script to set up web servers for deployment of web_static
+# This script sets up a web server for deployment of web_static
 
 if ! dpkg -s nginx &> /dev/null; then
     apt-get update
@@ -16,9 +16,8 @@ chown -R ubuntu:ubuntu /data/
 
 NGINX_CONF="/etc/nginx/sites-available/default"
 if ! grep -q "location /hbnb_static/" $NGINX_CONF; then
-    sed -i "/server_name _;/a \\
+    sed -i "/server_name _;/a \\ 
     location /hbnb_static/ {\\n\\talias /data/web_static/current/;\\n\\t}" $NGINX_CONF
-
 fi
 
 service nginx restart
