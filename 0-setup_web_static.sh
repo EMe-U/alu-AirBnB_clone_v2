@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Script to set up web servers for deployment of web_static
 
 if ! dpkg -s nginx &> /dev/null; then
     apt-get update
