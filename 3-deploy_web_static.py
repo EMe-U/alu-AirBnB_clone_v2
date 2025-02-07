@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-from fabric import task
-from fabric import Connection
+from fabric import task, Connection
 from datetime import datetime
 import os
 
@@ -41,6 +40,7 @@ def do_deploy(c, archive_path):
         print("New version deployed!")
         return True
     except Exception as e:
+        print(f"Error: {e}")
         return False
 
 @task
@@ -48,6 +48,7 @@ def deploy(c):
     """Deploys the web static files."""
     archive_path = do_pack(c)
     if not archive_path:
+        print("Failed to create archive")
         return False
     return do_deploy(c, archive_path)
 
@@ -56,5 +57,7 @@ def deploy_all(c):
     """Deploys to all hosts."""
     for host in env_hosts:
         conn = Connection(host=host, user=env_user, connect_kwargs={"key_filename": env_key_filename})
-        deploy(conn)
-
+        if not deploy(conn):
+            print(f"Deployment failed on {host}")
+            return False
+    return True
