@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from fabric import task
 from fabric import Connection
 from datetime import datetime
