@@ -13,7 +13,7 @@ env.hosts = ['<IP web-01>', '<IP web-02>']  # Replace with actual server IPs
 def do_pack():
     """
     Generates a .tgz archive from the contents of the web_static folder.
-    
+
     Returns:
         str: The path to the created archive if successful, otherwise None.
     """
@@ -21,7 +21,7 @@ def do_pack():
     local("mkdir -p versions")
     archive_path = "versions/web_static_{}.tgz".format(time_stamp)
     local("tar -cvzf {} web_static".format(archive_path))
-    
+
     if exists(archive_path):
         return archive_path
     return None
